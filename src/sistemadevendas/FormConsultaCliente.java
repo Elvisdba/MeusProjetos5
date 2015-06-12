@@ -40,7 +40,7 @@ public class FormConsultaCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JButtonListar.setText("Listar");
         JButtonListar.addActionListener(new java.awt.event.ActionListener() {

@@ -37,11 +37,11 @@ public class FormConsultaProduto extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButtonListar = new javax.swing.JButton();
-        jButtonNovoCliente = new javax.swing.JButton();
-        jButtonAlterarCliente = new javax.swing.JButton();
-        jButtonRemoverCliente = new javax.swing.JButton();
+        jButtonNovoProduto = new javax.swing.JButton();
+        jButtonAlterarProduto = new javax.swing.JButton();
+        jButtonRemoverProduto = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,24 +65,24 @@ public class FormConsultaProduto extends javax.swing.JFrame {
             }
         });
 
-        jButtonNovoCliente.setText("Novo");
-        jButtonNovoCliente.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNovoProduto.setText("Novo");
+        jButtonNovoProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNovoClienteActionPerformed(evt);
+                jButtonNovoProdutoActionPerformed(evt);
             }
         });
 
-        jButtonAlterarCliente.setText("Alterar");
-        jButtonAlterarCliente.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAlterarProduto.setText("Alterar");
+        jButtonAlterarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAlterarClienteActionPerformed(evt);
+                jButtonAlterarProdutoActionPerformed(evt);
             }
         });
 
-        jButtonRemoverCliente.setText("Remover");
-        jButtonRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRemoverProduto.setText("Remover");
+        jButtonRemoverProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRemoverClienteActionPerformed(evt);
+                jButtonRemoverProdutoActionPerformed(evt);
             }
         });
 
@@ -104,11 +104,11 @@ public class FormConsultaProduto extends javax.swing.JFrame {
                                 .addGap(22, 22, 22)
                                 .addComponent(jButtonListar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonNovoCliente)
+                                .addComponent(jButtonNovoProduto)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonAlterarCliente)
+                                .addComponent(jButtonAlterarProduto)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonRemoverCliente)))
+                                .addComponent(jButtonRemoverProduto)))
                         .addGap(0, 58, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -122,9 +122,9 @@ public class FormConsultaProduto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonListar)
-                    .addComponent(jButtonNovoCliente)
-                    .addComponent(jButtonAlterarCliente)
-                    .addComponent(jButtonRemoverCliente))
+                    .addComponent(jButtonNovoProduto)
+                    .addComponent(jButtonAlterarProduto)
+                    .addComponent(jButtonRemoverProduto))
                 .addGap(33, 33, 33))
         );
 
@@ -152,23 +152,23 @@ public class FormConsultaProduto extends javax.swing.JFrame {
         jTable1.setModel(modelo);
     }//GEN-LAST:event_jButtonListarActionPerformed
 
-    private void jButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoClienteActionPerformed
-        FormCadastroCliente form = new FormCadastroCliente();
+    private void jButtonNovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoProdutoActionPerformed
+        FormCadastroProduto form = new FormCadastroProduto();
         form.show();
-    }//GEN-LAST:event_jButtonNovoClienteActionPerformed
+    }//GEN-LAST:event_jButtonNovoProdutoActionPerformed
 
-    private void jButtonRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverClienteActionPerformed
+    private void jButtonRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverProdutoActionPerformed
         try{
             RepositorioProduto.obterInstancia().remover(this.lista.get(jTable1.getSelectedRow()));
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }//GEN-LAST:event_jButtonRemoverClienteActionPerformed
+    }//GEN-LAST:event_jButtonRemoverProdutoActionPerformed
 
-    private void jButtonAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarClienteActionPerformed
+    private void jButtonAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarProdutoActionPerformed
         FormAlterarProduto form = new FormAlterarProduto(this.lista.get(jTable1.getSelectedRow()));
         form.show();
-    }//GEN-LAST:event_jButtonAlterarClienteActionPerformed
+    }//GEN-LAST:event_jButtonAlterarProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,10 +206,10 @@ public class FormConsultaProduto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAlterarCliente;
+    private javax.swing.JButton jButtonAlterarProduto;
     private javax.swing.JButton jButtonListar;
-    private javax.swing.JButton jButtonNovoCliente;
-    private javax.swing.JButton jButtonRemoverCliente;
+    private javax.swing.JButton jButtonNovoProduto;
+    private javax.swing.JButton jButtonRemoverProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
