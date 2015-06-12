@@ -5,11 +5,16 @@
  */
 package sistemadevendas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gleidson
  */
 public class FormConsultaVenda extends javax.swing.JFrame {
+    private ArrayList<Venda> lista;
 
     /**
      * Creates new form FormConsultaVenda
@@ -29,19 +34,19 @@ public class FormConsultaVenda extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableVenda = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonListar = new javax.swing.JButton();
+        jButtonNovoCliente = new javax.swing.JButton();
+        jButtonRemoverCliente = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableItens = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,17 +57,37 @@ public class FormConsultaVenda extends javax.swing.JFrame {
                 "N°", "Data", "Cliente", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableVendaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableVenda);
 
         jLabel1.setText("Vendas");
 
-        jButton1.setText("Listar");
+        jButtonListar.setText("Listar");
+        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Novo");
+        jButtonNovoCliente.setText("Novo");
+        jButtonNovoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNovoClienteActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Remover");
+        jButtonRemoverCliente.setText("Remover");
+        jButtonRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverClienteActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -73,7 +98,12 @@ public class FormConsultaVenda extends javax.swing.JFrame {
                 "Produto", "Qtd", "Preco"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jTableItens.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableItensMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableItens);
 
         jLabel2.setText("Itens da venda");
 
@@ -91,11 +121,11 @@ public class FormConsultaVenda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(76, 76, 76)
-                            .addComponent(jButton1)
+                            .addComponent(jButtonListar)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton2)
+                            .addComponent(jButtonNovoCliente)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton3)
+                            .addComponent(jButtonRemoverCliente)
                             .addGap(119, 119, 119))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -118,9 +148,9 @@ public class FormConsultaVenda extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonListar)
+                    .addComponent(jButtonNovoCliente)
+                    .addComponent(jButtonRemoverCliente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -144,8 +174,54 @@ public class FormConsultaVenda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new String[]{"N°","Data", "Cliente", "Total"});
+        this.lista = RepositorioVenda.obterInstancia().listarTodos();
+        for (int i = 0; i < lista.size(); i++){
+            modelo.addRow(new Object[]{this.lista.get(i).getNumero(),
+                this.lista.get(i).getData(),
+                this.lista.get(i).getCliente().getNome(),
+                this.lista.get(i).getValorTotal()
+            });
+            
+        }
+        jTableVenda.setModel(modelo);
+    }//GEN-LAST:event_jButtonListarActionPerformed
+
+    private void jButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoClienteActionPerformed
+        FormCadastroCliente form = new FormCadastroCliente();
+        form.show();
+    }//GEN-LAST:event_jButtonNovoClienteActionPerformed
+
+    private void jButtonRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverClienteActionPerformed
+        try{
+            RepositorioVenda.obterInstancia().remover(this.lista.get(jTableVenda.getSelectedRow()));
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonRemoverClienteActionPerformed
+
+    private void jTableItensMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableItensMouseClicked
+
+    }//GEN-LAST:event_jTableItensMouseClicked
+
+    private void jTableVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVendaMouseClicked
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new String[]{"Produto","Qtd", "Preço"});
+        Venda venda = this.lista.get(jTableVenda.getSelectedRow());
+        for (int i = 0; i < venda.getItensDaVenda().size(); i++){
+            modelo.addRow(new Object[]{venda.getItensDaVenda().get(i).getProduto().getDescricao(),
+                venda.getItensDaVenda().get(i).getQuantidade(),
+                venda.getItensDaVenda().get(i).getPreco()
+            });
+            jTableItens.setModel(modelo);
+        }
+    }//GEN-LAST:event_jTableVendaMouseClicked
+
     /**
-     * @param args the command line arguments
+     *
+     * @param args
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -180,16 +256,16 @@ public class FormConsultaVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonListar;
+    private javax.swing.JButton jButtonNovoCliente;
+    private javax.swing.JButton jButtonRemoverCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableItens;
+    private javax.swing.JTable jTableVenda;
     // End of variables declaration//GEN-END:variables
 }
