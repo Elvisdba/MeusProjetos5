@@ -190,7 +190,7 @@ public class FormConsultaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoClienteActionPerformed
-        FormCadastroCliente form = new FormCadastroCliente();
+        FormCadastrarVenda form = new FormCadastrarVenda();
         form.show();
     }//GEN-LAST:event_jButtonNovoClienteActionPerformed
 
