@@ -5,11 +5,16 @@
  */
 package sistemadevendas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gleidson
  */
 public class FormConsultaProduto extends javax.swing.JFrame {
+    private ArrayList<Produto> lista;
 
     /**
      * Creates new form FormConsultaProduto
@@ -31,10 +36,10 @@ public class FormConsultaProduto extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonListar = new javax.swing.JButton();
+        jButtonNovoCliente = new javax.swing.JButton();
+        jButtonAlterarCliente = new javax.swing.JButton();
+        jButtonRemoverCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,18 +58,33 @@ public class FormConsultaProduto extends javax.swing.JFrame {
 
         jLabel1.setText("Produtos");
 
-        jButton1.setText("Listar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonListar.setText("Listar");
+        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonListarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Novo");
+        jButtonNovoCliente.setText("Novo");
+        jButtonNovoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNovoClienteActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Alterar");
+        jButtonAlterarCliente.setText("Alterar");
+        jButtonAlterarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAlterarClienteActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Remover");
+        jButtonRemoverCliente.setText("Remover");
+        jButtonRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,13 +102,13 @@ public class FormConsultaProduto extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
-                                .addComponent(jButton1)
+                                .addComponent(jButtonListar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(jButtonNovoCliente)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3)
+                                .addComponent(jButtonAlterarCliente)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4)))
+                                .addComponent(jButtonRemoverCliente)))
                         .addGap(0, 58, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -101,10 +121,10 @@ public class FormConsultaProduto extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButtonListar)
+                    .addComponent(jButtonNovoCliente)
+                    .addComponent(jButtonAlterarCliente)
+                    .addComponent(jButtonRemoverCliente))
                 .addGap(33, 33, 33))
         );
 
@@ -122,9 +142,33 @@ public class FormConsultaProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new String[]{"Cod. Barras","Descrição", "Preço"});
+        this.lista = RepositorioProduto.obterInstancia().listarTodos();
+        for (int i = 0; i < lista.size(); i++){
+            modelo.addRow(new Object[]{this.lista.get(i).getCodigodebarras(), this.lista.get(i).getDescricao(), this.lista.get(i).getPreco()});
+        }
+        jTable1.setModel(modelo);
+    }//GEN-LAST:event_jButtonListarActionPerformed
+
+    private void jButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoClienteActionPerformed
+        FormCadastroCliente form = new FormCadastroCliente();
+        form.show();
+    }//GEN-LAST:event_jButtonNovoClienteActionPerformed
+
+    private void jButtonRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverClienteActionPerformed
+        try{
+            RepositorioProduto.obterInstancia().remover(this.lista.get(jTable1.getSelectedRow()));
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonRemoverClienteActionPerformed
+
+    private void jButtonAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarClienteActionPerformed
+        FormAlterarProduto form = new FormAlterarProduto(this.lista.get(jTable1.getSelectedRow()));
+        form.show();
+    }//GEN-LAST:event_jButtonAlterarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,10 +206,10 @@ public class FormConsultaProduto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonAlterarCliente;
+    private javax.swing.JButton jButtonListar;
+    private javax.swing.JButton jButtonNovoCliente;
+    private javax.swing.JButton jButtonRemoverCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
